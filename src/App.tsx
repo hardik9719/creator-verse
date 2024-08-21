@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createClient, PostgrestResponse } from "@supabase/supabase-js";
+import { Link } from "react-router-dom";
 interface Creator {
   id: number;
   name: string;
@@ -30,6 +31,7 @@ function App() {
   }
 
   return (
+   <>
     <ul>
       {creators.map((creator) => (
         <>
@@ -40,6 +42,10 @@ function App() {
         </>
       ))}
     </ul>
+    <p>
+      <Link to={"/creator"}>Creator</Link>
+    </p>
+    </>
   );
 }
 
