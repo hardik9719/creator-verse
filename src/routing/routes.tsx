@@ -8,7 +8,7 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/creator",
+    path: "/creator/:id",
     element: <CreatorCard />,
   },
 ]);

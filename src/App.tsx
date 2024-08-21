@@ -32,16 +32,15 @@ function App() {
 
   return (
    <>
-    <ul>
       {creators.map((creator) => (
-        <>
+        <ul>
+          <Link to={`/creator/${creator.id}`}>{creator.name}</Link>
           <li key={creator.name}>{creator.name}</li>
           <li key={creator.image}>{creator.image}</li>
           <li key={creator.description}>{creator.description}</li>
           <li key={creator.id}>{creator.url}</li>
-        </>
+      </ul>
       ))}
-    </ul>
     <p>
       <Link to={"/creator"}>Creator</Link>
     </p>
