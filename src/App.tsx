@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import { createClient, PostgrestResponse } from "@supabase/supabase-js";
+interface Creator {
+  id: number;
+  name: string;
+  image: string;
+  description: string;
+  youtube: string;
+  twitter: string;
+  instagram: string;
+}
+const supabase = createClient(
+  "https://cpkyjrnbxltkimayradg.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNwa3lqcm5ieGx0a2ltYXlyYWRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjQyMTk0NjIsImV4cCI6MjAzOTc5NTQ2Mn0.oc30aPSqu18Idmr2IE287NX7l81VihLnew8V74S_tjk"
+);
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [creators, setCreators] = useState<Creator[]>([]);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  async function getUsers() {
+    const { data }: PostgrestResponse<Creator> = await supabase
+      .from("creator")
+      .select("*");
+    setCreators(data || []);
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ul>
+      {creators.map((creator) => (
+        <>
+          <li key={creator.name}>{creator.name}</li>
+          <li key={creator.image}>{creator.image}</li>
+          <li key={creator.description}>{creator.description}</li>
+          <li key={creator.youtube}>{creator.youtube}</li>
+          <li key={creator.twitter}>{creator.twitter}</li>
+        </>
+      ))}
+    </ul>
+  );
 }
 
-export default App
+export default App;
