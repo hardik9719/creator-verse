@@ -5,9 +5,7 @@ interface Creator {
   name: string;
   image: string;
   description: string;
-  youtube: string;
-  twitter: string;
-  instagram: string;
+  url: string[];
 }
 const supabase = createClient(
   "https://cpkyjrnbxltkimayradg.supabase.co",
@@ -23,8 +21,11 @@ function App() {
 
   async function getUsers() {
     const { data }: PostgrestResponse<Creator> = await supabase
+    
       .from("creator")
       .select("*");
+    console.log(data);
+
     setCreators(data || []);
   }
 
@@ -35,8 +36,7 @@ function App() {
           <li key={creator.name}>{creator.name}</li>
           <li key={creator.image}>{creator.image}</li>
           <li key={creator.description}>{creator.description}</li>
-          <li key={creator.youtube}>{creator.youtube}</li>
-          <li key={creator.twitter}>{creator.twitter}</li>
+          <li key={creator.id}>{creator.url}</li>
         </>
       ))}
     </ul>
