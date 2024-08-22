@@ -7,6 +7,8 @@ export const AddCreator = () => {
         event.preventDefault();
         navigate("/");
     }}>
+        
+        <input type="text" name="" id="" />
         <button className="btn btn-primary" type="submit">Submit</button>
 
     </form>
