@@ -7,7 +7,9 @@ export interface Creator {
   name: string;
   image: string;
   description: string;
-  url: string[];
+  youtube_handle: string;
+  twitter_handle: string;
+  instagram_handle: string;
 }
 
 function App() {
@@ -19,7 +21,7 @@ function App() {
 
   async function getUsers() {
     const { data }: PostgrestResponse<Creator> = await supabase
-    
+
       .from("creator")
       .select("*");
     console.log(data);
@@ -28,19 +30,18 @@ function App() {
   }
 
   return (
-   <>
+    <>
       {creators.map((creator) => (
         <ul>
           <Link to={`/creator/${creator.id}`}>{creator.name}</Link>
           <li key={creator.name}>{creator.name}</li>
           <li key={creator.image}>{creator.image}</li>
           <li key={creator.description}>{creator.description}</li>
-          <li key={creator.id}>{creator.url}</li>
-      </ul>
+        </ul>
       ))}
-    <p>
-      <Link to={"/creator"}>Creator</Link>
-    </p>
+      <p>
+        <Link to={"/creator"}>Creator</Link>
+      </p>
     </>
   );
 }
