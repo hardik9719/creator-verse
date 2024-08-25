@@ -24,12 +24,11 @@ export const CreatorListPage = () => {
     return (
      <>
         {creators.map((creator) => (
-          <ul>
+          <ul key={creator.id}>
             <Link to={{pathname:`/creator/${creator.id}`}} state={{some:creator}}>{creator.name}</Link>
             <li key={creator.name}>{creator.name}</li>
             <li key={creator.image}>{creator.image}</li>
             <li key={creator.description}>{creator.description}</li>
-            <li key={creator.id}>{creator.url}</li>
         </ul>
         ))}
       <p>
