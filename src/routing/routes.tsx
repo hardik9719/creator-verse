@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { CreatorDetailPage } from "../components/pages/CreatorDetailPage";
 import { Layout } from "./Layout";
-import { HomePage } from "../components/pages/HomePage";
 import { CreatorListPage } from "../components/pages/CreatorListPage";
 import { AddCreator } from "../components/pages/AddCreator";
 import CreatorProvider from "../creatorProvider";
@@ -17,10 +16,14 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: <CreatorListPage />,
       },
       {
         path: "new",
+        element: <AddCreator />,
+      },
+      {
+        path: "edit/:id",
         element: <AddCreator />,
       },
       {

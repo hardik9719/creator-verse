@@ -1,24 +1,55 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { Creator } from "../../App";
+import { useNavigate, useParams } from "react-router-dom";
+import useCreator from "../../useCreators";
+import { useEffect } from "react";
 import supabase from "../../services/supabaseClient";
-import { useNavigate } from "react-router-dom";
 export const AddCreator = () => {
+  const { creator, dispatch } = useCreator();
   const navigate = useNavigate();
   const {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm<Creator>();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      console.log(id);
+      const creatorDetail = creator.find((cr) => cr.id === Number(id));
+      console.log(creatorDetail);
+
+      reset(creatorDetail);
+    }
+  }, [id, reset]);
+
   const onSubmit = async (data: FieldValues) => {
+    data = { ...data, id: creator.length + 1 };
+
     const { error } = await supabase.from("creator").insert(data as Creator);
     if (error) throw new Error(error.message);
     console.log("Sucesss");
 
+    dispatch({ type: "ADD", creator: data as Creator });
+    navigate("/creators");
+  };
+  const onUpdate = async (data: FieldValues) => {
+    const { error } = await supabase
+      .from("creator")
+      .update(data as Creator)
+      .eq("id", id);
+    if (error) throw new Error(error.message);
+    console.log("Sucesss");
+
+    dispatch({ type: "UPDATE", creator: data as Creator });
     navigate("/creators");
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(id ? onUpdate : onSubmit)}>
       <div className="mb-3">
         <label htmlFor="name" className="form-label">
           Name
