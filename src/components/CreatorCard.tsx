@@ -23,24 +23,43 @@ export const CreatorCard = ({ creator }: Props) => {
     dispatch({ type: "DELETE", creatorId });
   }
   return (
-    <div id={creator.description}>
-      <div className="card" style={{ width: "18rem" }}>
+    <div id={creator.description} className="p-5">
+      <div className="card" style={{ width: "30rem" }}>
         <img
           className="card-img-top"
           src={creator.image}
           alt="Card image cap"
         />
-        <div className="card-body">
+        <div className="card-body ">
           <h5 className="card-title">{creator.name}</h5>
-          <p className="card-text">{creator.description}.</p>
+          <p className="card-text">{creator.description}</p>
+          <br />
           <a
-            className="btn btn-primary"
+            href={`https://www.instagram.com/${creator.instagram_handle}/`}
+            className="me-2"
+          >
+            Instagram
+          </a>
+          <a
+            href={`https://www.twitter.com/${creator.twitter_handle}/`}
+            className="me-2"
+          >
+            Twitter
+          </a>
+          <a
+            href={`https://www.youtube.com/${creator.youtube_handle}/`}
+            className="me-2"
+          >
+            Youtube
+          </a>
+          <a
+            className="btn btn-primary me-2"
             onClick={() => navigate(`/edit/${creator.id}`)}
           >
             Edit
           </a>
           <a
-            className="btn btn-primary"
+            className="btn btn-primary me-2"
             onClick={() => {
               deleteCreator(creator.id);
             }}
