@@ -43,22 +43,23 @@ interface Props {
 }
 export const CreatorProvider = ({ children }: Props) => {
   const [creator, dispatch] = useReducer(creatorReducer, []);
-  const isMounted = useRef(false);
   useEffect(() => {
-    getUsers();
-    isMounted.current = true;
+    const ac = new AbortController();
 
-    return () => {
-      isMounted.current = false; // Reset ref for future mounts if needed
+    getUsers(ac.signal);
+
+    () => {
+
+      ac.abort();
     };
   }, []);
 
-  async function getUsers() {
+  async function getUsers(signal: AbortSignal) {
     const { data }: PostgrestResponse<Creator> = await supabase
       .from("creator")
-      .select("*");
-    // console.log(data);
-    if (data == null) throw new Error("Error fetching Cretors");
+      .select("*")
+      .abortSignal(signal);
+    if (data == null) return;
     data.map((d) => dispatch({ type: "ADD", creator: d }));
   }
 
