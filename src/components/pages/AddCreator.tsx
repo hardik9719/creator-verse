@@ -148,7 +148,9 @@ export const AddCreator = () => {
             className="form-control"
           />
           {errors.instagram_handle && (
-            <p className="text text-danger">{errors.instagram_handle.message}</p>
+            <p className="text text-danger">
+              {errors.instagram_handle.message}
+            </p>
           )}
         </div>
         <button className="btn btn-primary" type="submit">

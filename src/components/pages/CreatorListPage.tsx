@@ -7,7 +7,7 @@ export const CreatorListPage = () => {
   return (
     <>
       {creator.map((c) => (
-        <CreatorCard creator={c} />
+        <CreatorCard key={c.id} creator={c} />
       ))}
     </>
   );

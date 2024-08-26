@@ -23,7 +23,7 @@ export const CreatorCard = ({ creator }: Props) => {
     dispatch({ type: "DELETE", creatorId });
   }
   return (
-    <div id={creator.description} className="p-5">
+    <div id={creator.instagram_handle} className="p-5">
       <div className="card" style={{ width: "30rem" }}>
         <img
           className="card-img-top"
